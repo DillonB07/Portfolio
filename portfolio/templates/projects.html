@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %}My Projects{% endblock %}{% block
+content %}
+<h1>My Projects</h1>
+<div class="card center transparent">
+  <h4>Websites</h4>
+  <div class="card">
+    <h5>Spotter</h5>
+    <p>
+      Spotter is an easy-to-use Spotify music controller with functioning room
+      and voting systems.
+    </p>
+    <a class="button" href="/projects/spotter">Learn More</a>
+  </div>
+  <h4>Programs</h4>
+  <div class="card">
+    <h5>Impulse</h5>
+    <p>
+      Impulse is a macOS Virtual/Voice Assistant! Impulse is a little buggy and
+      slow.
+    </p>
+    <a class="button" href="/projects/impulse">Learn More</a>
+  </div>
+  <div class="card">
+    <h5>Checkers/Draughts</h5>
+    <p>
+      This uses pygame to create a working Checkers game with an AI! Status:
+      Documentation
+    </p>
+    <a
+      class="button"
+      href="https://github.com/dbarnes18/Checkers-AI"
+      target="_blank"
+      >Learn More</a
+    >
+  </div>
+</div>
+<div class="container">
+  <a class="button" href="/">Back</a>
+</div>
+{% endblock %}

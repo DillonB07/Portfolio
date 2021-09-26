@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %}Impulse{% endblock %} {% block
+content %}
+<h1>Impulse</h1>
+<div class="card">
+  <h3>Impulse</h3>
+  <p>
+    Impulse is a macOS Virtual/Voice Assistant!
+    <i>Impulse is a little buggy and slow.</i>
+  </p>
+  <div class="container">
+    <img
+      src="{{ url_for('static', filename='images/impulse.png') }}"
+      width="30%"
+      height="30%"
+      alt="Impulse"
+    />
+  </div>
+  <br />
+  <p>
+    Impulse is a utility voice assistant for macOS, that isn't very useful at
+    all! He has a few basic features, but more might be coming soon....
+  </p>
+  <h4>Features</h4>
+  <ul>
+    <li>Google Calendar Integration</li>
+    <li>
+      Creating notes
+      <i> .txt files which will open in Sublime Text if installed. </i>
+    </li>
+    <li>Time</li>
+    <li>Jokes via a Jokes API</li>
+  </ul>
+  <h4>Where is it?</h4>
+  <ul class="links">
+    <li>
+      <a href="https://dbarnes18.github.io/Impulse" target="_blank"> Info </a>
+    </li>
+    <li>
+      <a href="https://github.com/dbarnes18/Impulse" target="_blank">
+        GitHub
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="container">
+  <a class="button" href="/projects">Back</a>
+</div>
+{% endblock %}

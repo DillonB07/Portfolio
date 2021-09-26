@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block title %}Spotter{% endblock %} {% block
+content %}
+<h1>Spotter</h1>
+<div class="card">
+  <h3>Spotter</h3>
+  <p>
+    Spotter is a website that you can connect to Spotify to control your music
+    with an extremely simple, easy-to-use interface.
+  </p>
+  <div class="container">
+    <img
+      src="{{ url_for('static', filename='images/spotter.png') }}"
+      width="60%"
+      height="60%"
+      alt="Spotter"
+    />
+  </div>
+  <p>
+    Spotter lets you generate a room that you can invite other people to to
+    control your music with you. With a voting system for skipping and rewinding
+    songs, you could use it at a party so that the guests can control the music!
+  </p>
+
+  <h4>Features</h4>
+  <ul>
+    <li>View song, and album cover</li>
+    <li>View timeline for song</li>
+    <li>
+      Voting system for skipping to previous song, and next song Can be set to
+      one if you want it to be clicked once.
+    </li>
+    <li>Shuffle Button</li>
+    <li>
+      Repeat button Goes through the 3 states of repeating like in Spotify app
+    </li>
+    <li>Pause/Play button</li>
+    <li>
+      Settings page where you can control the amount of votes, and whether
+      guests can pause
+    </li>
+    <li>Fully functioning Room Join/Create system</li>
+    <li>
+      Backwards-Compatability for browsers with older versions of JavaScript
+    </li>
+  </ul>
+  <h4>Where is it?</h4>
+  <ul class="links">
+    <li>
+      <a
+        href="https://replit.com/talk/share/Spotter-Spotify-Controller/145145"
+        target="_blank"
+      >
+        Info
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/dbarnes18/Spotter" target="_blank">
+        GitHub
+      </a>
+    </li>
+    <li>
+      <a href="https://spotter.dillonb07.repl.co" target="_blank"> Website </a>
+    </li>
+  </ul>
+</div>
+<div class="container">
+  <a class="button" href="/projects">Back</a>
+</div>
+{% endblock %}
