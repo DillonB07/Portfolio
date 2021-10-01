@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block title %}My Projects{% endblock %}{% block
+content %}
+<h1>My Projects</h1>
+<div class="card center transparent">
+  <h4>Plain Python</h4>
+  <div class="card">
+    <h5>A Guide to Random Numbers</h5>
+    <p>
+      Have you ever wondered how random numbers are generated? Learn all about
+      random numbers and how they work here!
+    </p>
+    <a class="button" href="/tutorial/python/randomNumbers">Learn More</a>
+  </div>
+  <h4>Replit</h4>
+  <div class="card">
+    <h5>Using a Custom Domain</h5>
+    <p>Use a custom domain for your Replit repl!</p>
+    <a class="button" href="/tutorial/replit/customDomain">Learn More</a>
+  </div>
+  <div class="card">
+    <h5>Get an <code>USERNAME.is-a.dev</code> Domain</h5>
+    <p>Get a <code>USERNAME.is-a.dev</code> domain for free!</p>
+    <a class="button" href="/tutorial/replit/is-a-dev">Learn More</a>
+  </div>
+  <h4>Flask</h4>
+  <div class="card">
+    <h5>Integrate Google Auth into your Flask Website</h5>
+    <p>Find out how to use Google's OAuth2 with your website!</p>
+    <a class="button" href="/tutorial/flask/googleAuth">Learn More</a>
+  </div>
+  <h4>Django</h4>
+  <div class="card">
+    <h5>Integrate React into your Django app</h5>
+    <p>
+      Do you want to use React for the frontend of yor Django application? Find
+      out how in this tutorial.
+    </p>
+    <a class="button" href="/tutorial/django/reactDjango">Learn More</a>
+  </div>
+</div>
+<div class="container">
+  <a class="button" href="/">Back</a>
+</div>
+{% endblock %}

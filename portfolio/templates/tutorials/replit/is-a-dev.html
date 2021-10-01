@@ -1,0 +1,127 @@
+{% extends 'base.html' %} {% block title %}How to get a USERNAME.is-a.dev
+subdomain{% endblock %} {% block content %}
+<h1>How to get a <code>USERNAME.is-a.dev</code> subdomain</h1>
+<div class="card">
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144654"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144654&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+  <h2>Introduction</h2>
+  <p>
+    A while ago, I made a tutorial on how to get a custom domain for your repl.
+    <a
+      href="https://replit.com/talk/learn/How-to-use-a-Custom-Domain-with-Replit/144185"
+      target="_blank"
+      >https://replit.com/talk/learn/How-to-use-a-Custom-Domain-with-Replit/144185</a
+    >
+  </p>
+  <p>
+    This time, I'll be teaching you how to get an address like
+    <a href="https://dillonb07.is-a.dev/" target="_blank"
+      >https://dillonb07.is-a.dev</a
+    >
+  </p>
+  <p>This is free and easy. However, you need to be patient.</p>
+
+  <p>
+    <em
+      >NOTE: This doesn't need to be done on Replit. You can use anything that
+      supports a custom domain like GitHub Pages, Vercel, Railway, etc.</em
+    >
+  </p>
+
+  <h2>Get your CNAME record</h2>
+
+  <p>
+    Create your repl and get your CNAME record.
+    <em>Look on my other domain tutorial for more information</em>
+  </p>
+
+  <h2>Register the subdomain</h2>
+
+  <p>
+    Now, you need a GitHub account, because you'll be making a pull request on a
+    repository.
+  </p>
+
+  <p>
+    Go to this GitHub repository:
+    <a href="https://github.com/is-a-dev/register" target="_blank"
+      >https://github.com/is-a-dev/register</a
+    >
+  </p>
+
+  <p>Click <code>Add file</code>, <code>Create new file</code></p>
+
+  <p>Call it <code>domains/USERNAME.json</code> with the following contents:</p>
+
+  <pre><code class='json' >
+    {
+        "description": "DESCRIPTION OF YOUR PROJECT",
+        "repo": "YOUR REPL LINK OR GITHUB REPOSITORY", 
+        "owner": {
+          "username": "PUT YOUR GITHUB USERNAME HERE",
+          "email": "PUT YOUR EMAIL HERE"
+        },
+        "record": {
+          "CNAME": "PUT THE CNAME YOU COPIED FROM REPLIT HERE"
+        }
+    }
+    </code></pre>
+
+  <p><code>Propose new file</code> and <code>Create Pull Request</code></p>
+
+  <p>
+    Now, you need to wait for a maintainer of the project to accept your pull
+    request and link your repl. This may be a few minutes, or a few days. For
+    me, I sent my PR in the evening and had my domain in the morning the next
+    day.
+  </p>
+
+  <p>
+    Here is my PR as an example:
+    <a href="https://github.com/is-a-dev/register/pull/939" target="blank"
+      >https://github.com/is-a-dev/register/pull/939</a
+    >
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629998522685_82923114af98f21db5b6312351e9d538.gif"
+    alt="Creating a Pull Request"
+  />
+  <em
+    >I don't create a Pull Request here, because I don't want to spam the
+    service, and I already have a subdomain.</em
+  >
+
+  <h2>Add to Replit</h2>
+
+  <p>
+    Now, enter the <code>USERNAME.is-a.dev</code> into the link box and click
+    <code>Link</code>!
+  </p>
+
+  <p>You have now got a fancy <code>USERNAME.is-a.dev</code> subdomain!</p>
+
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144654"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144654&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,541 @@
+{% extends 'base.html' %} {% block title %}Integrate React with Django{%
+endblock %} {% block content %}
+<h1>Integrate React with Django</h1>
+<div class="card">
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144877"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144877&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+  <h2>Introduction</h2>
+  <p>
+    Welcome to this Django and React tutorial. In this tutorial, I am not going
+    to be teaching you how to use React, or how to use Django. I will be
+    teaching you how to integrate React into your Django application.
+  </p>
+
+  <h2>Prerequisites</h2>
+
+  <ul>
+    <li>Python</li>
+    <li>Node.js</li>
+    <li>Npm</li>
+    <li>A computer</li>
+    <li>Basic Python knowledge</li>
+    <li>Basic Django knowledge</li>
+    <li>Intermediate JavaScript knowledge</li>
+    <li>Basic React knowledge</li>
+  </ul>
+
+  <h2>Tutorial</h2>
+
+  <h3>Setting up a Django Application</h3>
+
+  <p>
+    Create a new Python repl and open the Shell. If you're using an existing
+    Django project, just add the <code class="plaintext">frontend</code> app.
+  </p>
+
+  <pre><code class='zsh'>
+    pip install django
+    django-admin startproject django_react . # This dot will make the project in the main directory instead of wrapping it in a new folder.
+    django-admin startapp frontend
+    </code>
+  </pre>
+
+  <img
+    class="img-fifty img-center"
+    src="https://storage.googleapis.com/replit/images/1630512462670_39e15dab3a2c97ad74f2976da4d1dd88.gif"
+    alt="App setup gif"
+  />
+
+  <h3>Running your Django Application</h3>
+
+  <p>
+    Now, you can delete the <code>main.py</code> file. Create a new file called
+    <code>.replit</code> with the following contents:
+  </p>
+
+  <pre><code class='toml'>
+    language="python3"
+    run="python manage.py runserver 0.0.0.0:3000"
+  </code></pre>
+
+  <p>
+    If you are doing this on your computer, you can just run the server from
+    your Terminal.
+  </p>
+
+  <p>Now, your files should look like this:</p>
+
+  <pre><code>
+    |____manage.py
+    |____django_react
+    | |______init__.py
+    | |____asgi.py
+    | |____settings.py
+    | |____urls.py
+    | |____wsgi.py
+    |____frontend
+    | |______init__.py
+    | |____admin.py
+    | |____apps.py
+    | |____models.py
+    | |____tests.py
+    | |____views.py
+    | |____migrations
+    | | |______init__.py
+    |____.replit
+  </code></pre>
+
+  <p>
+    Go into your <code>settings.py</code> file, and set
+    <code>ALLOWED_HOSTS</code> to <code>['*']</code>
+  </p>
+
+  <p>
+    If you run your repl, you'll see that the server starts running.
+    <em
+      >For some reason, the embedded version of the website doesn't work, so
+      you'll have to open it in a new tab.</em
+    >
+  </p>
+
+  <h3>Setting up our <code>frontend</code> app</h3>
+
+  <p>
+    Now, if you go to <code>settings.py</code>, you'll need to add frontend to
+    <code>INSTALLED_APPS</code>.
+  </p>
+
+  <p>
+    Go into your shell/terminal again. Run the following commands to set up
+    react, and the other modules.
+  </p>
+
+  <pre><code class='zsh'>
+    python manage.py makemigrations
+    python manage.py migrate
+    cd frontend
+    mkdir templates
+    mkdir templates/frontend
+    mkdir static
+    mkdir static/frontend
+    mkdir static/css
+    mkdir static/images
+    mkdir src
+    mkdir src/components
+    npm init -y
+    npm i webpack webpack-cli --save-dev
+    npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+    npm i react react-dom --save-dev
+    npm install @material-ui/core # This is for styling, if you want it.
+    npm install @babel/plugin-proposal-class-properties
+    npm install react-router-dom
+  </code></pre>
+
+  <p>
+    That was a lot of commands. The first 2 commands apply migrations to your
+    Django database. The next 9 commands navigate to the
+    <code>frontend</code> directory, and create the necessary folders. The next
+    7 commands initialise a <code>npm</code> project and install the modules we
+    need.
+  </p>
+
+  <p>
+    Create a file called <code>babel.config.json</code>, with the following
+    contents:
+  </p>
+
+  <pre><code class='json'>
+    {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "10"
+              }
+            }
+          ],
+          "@babel/preset-react"
+        ],
+        "plugins": ["@babel/plugin-proposal-class-properties"]
+    }
+  </code></pre>
+
+  <p>
+    Babel enables backwards-compatibility for older versions of JavaScript on
+    browsers. This will mean that more devices and web browsers can run your
+    website.
+  </p>
+
+  <p>Now, create <code>webpack.config.js</code> with this code:</p>
+
+  <pre><code class='js'>
+    const path = require("path");
+    const webpack = require("webpack");
+    
+    module.exports = {
+      entry: "./src/index.js",
+      output: {
+        path: path.resolve(__dirname, "./static/frontend"),
+        filename: "[name].js",
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+            },
+          },
+        ],
+      },
+      optimization: {
+        minimize: true,
+      },
+      plugins: [
+        new webpack.DefinePlugin({
+          "process.env": {
+            NODE_ENV: JSON.stringify("production"),
+          },
+        }),
+      ],
+    };
+  </code></pre>
+
+  <p>
+    This code "bundles" your code into a single JavaScript file that will be
+    loaded by your Django template. The JavaScript is also optimized to make it
+    load faster, and make the file smaller
+  </p>
+
+  <p>Now, inside of <code>package.json</code>, we need to add two scripts.</p>
+
+  <pre><code class='json'>
+    {
+        ...
+        "scripts": {
+            "dev": "webpack --mode development --watch --stats-error-details",
+            "build": "webpack --mode production"
+        }
+        ...
+    }
+  </code></pre>
+
+  <p>
+    We can now edit our <code>.replit</code> file to build our JavaScript when
+    we run the repl.
+  </p>
+
+  <pre><code class='toml'>
+    language="python3"
+    run="cd frontend && npm run build && cd .. && python manage.py runserver 0.0.0.0:3000"
+  </code></pre>
+
+  <p>
+    This may look a little confusing, but it is just telling Replit to go to the
+    <code>frontend</code> folder, to build our scripts, navigate out of the
+    <code>frontend</code> folder, and run the server.
+  </p>
+
+  <p>
+    Now, let's create a file called <code>index.js</code> inside of the
+    <code>src</code> folder.
+    <strong
+      ><em
+        >Do not make it inside of the <code>components</code> folder!</em
+      ></strong
+    >
+  </p>
+
+  <pre><code class='js'>
+    import App from "./components/App";
+  </code></pre>
+
+  <p>This file will be used by webpack to bundle the JavaScript.</p>
+
+  <p>
+    Now, go to <code>templates/frontend</code> and create an
+    <code>index.html</code> file like this:
+  </p>
+
+  <pre><code class='html'>
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta charset="UTF-8" /&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+        &lt;title&gt;Django-React Demo&lt;/title&gt;
+        &lcub;% load static %&rcub;
+        &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        /&gt;
+        &lt;link rel="stylesheet" type="text/css" href="&lcub;% static "css/index.css" %&rcub;"
+        /&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="main"&gt;
+          &lt;div id="app"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    
+        &lt;script src="&lcub;% static "frontend/main.js" %&rcub;"&gt;&lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  </code></pre>
+
+  <p>
+    This will be used to render the JavaScript/React code we're going to write.
+    We're loading our CSS and JavaScript here. The <code>divs</code> will be
+    where we render our JavaScript/React code.
+  </p>
+
+  <p>Now, it's time to write some Python code!</p>
+
+  <p>
+    We're going to create a view that will render our template. Go to
+    <code>views.py</code>
+    and add this view:
+  </p>
+
+  <pre><code class='python'>
+    from django.shortcuts import render
+
+    # Create your views here.
+    def index(request, *args, **kwargs):
+        return render(request, 'frontend/index.html')
+  </code></pre>
+
+  <p>
+    This is going to render the template <code>index.html</code>. We won't need
+    any other views.
+  </p>
+
+  <p>Go to <code>django_react/urls.py</code> and add a route:</p>
+
+  <pre><code class='python'>
+    from django.contrib import admin
+    from django.urls import path, include
+    
+    urlpatterns = [
+        path('admin', admin.site.urls),
+        path('', include('frontend.urls'))
+    ]
+  </code></pre>
+
+  <p>
+    This will let us access our urls in the <code>frontend/urls.py</code> file.
+    However, that file doesn't exist. Let's create it!
+  </p>
+
+  <pre><code class='python'>
+    from django.urls import path
+    from .views import index
+    
+    urlpatterns = [
+        path('', index)
+    ]
+  </code></pre>
+
+  <p>
+    For every route you create, you need to pass the <code>index</code> view.
+    This will just render the template for the view. It'll be the same view
+    every time, but our JavaScript will have its own router for the different
+    pages.
+  </p>
+
+  <p>
+    Finally, let's create a file called <code>index.css</code> inside our
+    <code>static/css</code> folder.
+  </p>
+
+  <pre><code class='css'>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #main {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+    
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </code></pre>
+
+  <h3>Writing React Code</h3>
+
+  <p>That was a long setup, but we're ready to start React-ing!</p>
+
+  <p>
+    Create a file in the <code>src/components folder</code> called
+    <code>App.js</code> with the following code:
+  </p>
+
+  <pre><code class='js'>
+    import React, { Component } from "react";
+    import { render } from "react-dom";
+    import Routes from "./Routes";
+    
+    export default class App extends Component {
+      constructor(props) {
+        super(props);
+      }
+    
+      render() {
+        return &lt;Routes /&gt;;
+      }
+    }
+
+    const appDiv = document.getElementById("app");
+    render(&lt;App /&gt;, appDiv);
+  </code></pre>
+
+  <p>
+    Now, this code is returning the code inside <code>Routes.py</code> which
+    we'll create in a moment. It also renders everything into the
+    <code>div</code> we created inside the <code>index.html</code> file.
+  </p>
+
+  <p>
+    Now, let's create <code>Routes.py</code> inside the
+    <code>components</code> folder. This file will control the routes for the
+    different pages on your website and render the content onto them.
+  </p>
+
+  <pre><code class='js'>
+    import React, { Component } from "react";
+    import HomePage from "./HomePage";
+    import OtherPage from "./OtherPage";
+    import AnotherPage from "./AnotherPage";
+    import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+    
+    export default class Routes extends Component {
+      constructor(props) {
+        super(props);
+      }
+    
+      render() {
+        return (
+          &lt;BrowserRouter&gt;
+            &lt;Switch&gt;
+              &lt;Route exact path="/" component={HomePage}&gt;
+                &lt;HomePage /&gt;
+              &lt;/Route&gt;
+              &lt;Route exact path="/1" component={OtherPage}&gt;
+                &lt;OtherPage /&gt;
+              &lt;/Route&gt;
+              &lt;Route exact path="/2" component={AnotherPage}&gt;
+                &lt;AnotherPage /&gt;
+              &lt;/Route&gt;
+            &lt;/Switch&gt;
+          &lt;/BrowserRouter&gt;
+        );
+      }
+    } // You must also add these routes to urls.py
+  </code></pre>
+
+  <p>
+    As you can see, you can use <code>&lt;BrowserRouter&gt;</code> from the
+    react-router-dom module to create a router for your app. You then use
+    <code>&lt;Router&gt;</code> to define your routes. You can then use
+    <code>&lt;YourReactComponent /&gt;</code> to render that component on the
+    specified path.
+  </p>
+
+  <p>
+    I've now created three new components. <code>HomePage.js</code>,
+    <code>OtherPage.js</code> and <code>AnotherPage.js</code>. These are very
+    basic React pages that will be rendered by the paths above.
+  </p>
+
+  <p>
+    However, you can create your own React components now for your Django
+    application. You could even have another Django app for the backend of your
+    website, and use React on the frontend app to make it look nice.
+  </p>
+
+  <p>
+    Here is an example of a basic React component. You could modify this to
+    create your own website, our just create your own component!
+  </p>
+  <code>HomePage.js</code>
+  <pre><code class='js'>
+    import React, { Component } from 'react';
+
+    export default class HomePage extends Component {
+        constructor(props) {
+            super(props);
+        }
+    
+        render() {
+            return (&lt;div&gt;&lt;h1&gt;Home page&lt;/h1&gt;&lt;p&gt;This is the home page&lt;/p&gt;&lt;/div&gt;)
+        }
+    }
+  </code></pre>
+
+  <p>Here are my three pages:</p>
+  <ol>
+    <li>
+      <a href="https://djangoreactdemo.dillonb07.repl.co/" target="_blank"
+        >https://djangoreactdemo.dillonb07.repl.co/</a
+      >
+    </li>
+    <li>
+      <a href="https://djangoreactdemo.dillonb07.repl.co/1" target="_blank"
+        >https://djangoreactdemo.dillonb07.repl.co/1</a
+      >
+    </li>
+    <li>
+      <a href="https://djangoreactdemo.dillonb07.repl.co/2" target="_blank"
+        >https://djangoreactdemo.dillonb07.repl.co/2</a
+      >
+    </li>
+  </ol>
+
+  <p>
+    And, here is my repl:
+    <a href="https://replit.com/@DillonB07/DjangoReactDemo" target="_blank"
+      >https://replit.com/@DillonB07/DjangoReactDemo</a
+    >
+  </p>
+
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144877"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144877&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}

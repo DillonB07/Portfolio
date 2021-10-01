@@ -1,0 +1,272 @@
+{% extends 'base.html' %} {% block title %}Get a Custom Domain for your Replit
+Repl{% endblock %} {% block content %}
+<h1>Get a Custom Domain for your Replit Repl!</h1>
+<div class="card">
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144185"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144185&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+  <h2>Introduction</h2>
+  <p>
+    Do you dislike your long repl.co domain? Or, do you want a more memorable
+    one? Well, whatever the reason, this tutorial is for you!
+  </p>
+  <p>
+    There are many tutorials for this, but most of them are outdated and no
+    longer work. So, I thought I would create my own <em>accurate</em> tutorial!
+  </p>
+  <p>Let's get started!</p>
+
+  <h2>Creating your Repl</h2>
+
+  <p>Well, I'll assume you already have a repl that hosts a web application.</p>
+
+  <ul>
+    <li>If you are in a team, you must be the owner of the team to do this!</li>
+    <li>For a multiplayer repl, you need to be the owner of the repl</li>
+  </ul>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124395886_632eaa36e18889a9c4ac241474fd5a80.png"
+    alt="Repl"
+  />
+
+  <p>So, onto the next step!</p>
+
+  <h2>Getting a Domain</h2>
+
+  <p>
+    Well, you obviously need a domain to add a custom domain to your repl! For
+    this tutorial, I'll be getting a free domain from Freenom, but you can get
+    yours from anywhere.
+  </p>
+
+  <h3>Choosing your Domain</h3>
+
+  <p>
+    We're going to be getting a domain from
+    <a href="https://freenom.com" target="_blank">Freenom.</a>
+  </p>
+  <p>
+    Search for a domain you would like and click <code>Get it now!</code>, then
+    <code>Checkout</code>
+    Freenom is very slow to load. Be patient!
+  </p>
+  <p>
+    If you can't use the <code>Get it now!</code> button, search for the domain
+    with the extension on the end.
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124425295_26159791470891ba189eac3621c9fab9.png"
+    alt="Freenom Search"
+  />
+
+  <h3>"Buy" your domain</h3>
+
+  <p>
+    Select the period you would like from the <code>PERIOD</code> dropdown. I
+    recommend <code>12 months @ FREE</code> if you want it for free. Then, click
+    <code>Continue</code>. Now, complete your order after agreeing to the Terms
+    and Conditions.
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124449738_43bc31daca65dd96092298e46086672c.png"
+    alt="Freenom Domain Period"
+  />
+
+  <p>
+    If you have never used Freenom before, you will be asked to create an
+    account. Do this, and I'll see you on the next step.
+  </p>
+
+  <h3>Managing Domains</h3>
+
+  <p>You can manage all of your domains under <code>My Domains</code></p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124484798_3e299481808b30d80484b88cfbc03065.png"
+    alt="Freenom Order Confirmation"
+  />
+
+  <p>Now, select your domain.</p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124505318_d989ce82e55c013900aab20792deeb1d.png"
+    alt="Freenom Domain Management"
+  />
+
+  <h2>Setting up your Domain with Cloudflare</h2>
+
+  <p>
+    Now, we'll add our domain to Cloudlfare. You don't have to do this, though
+    your website will be faster and more secure if you do do this. And it's
+    free, so why not?
+  </p>
+
+  <p>
+    So, create or sign into a
+    <a href="https://cloudflare.com" target="_blank">Cloudflare</a> account.
+  </p>
+
+  <h3>Adding our site to Cloudflare</h3>
+
+  <p>
+    Now, we need to tell Cloudlflare what our domain is, and prove that it is
+    ours.
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124527635_08c8a974b6b31cd2495e04f1f61fe688.png"
+    alt="Add domain to Cloudflare"
+  />
+
+  <p>Now, select a plan. I'll use Free.</p>
+
+  <p>
+    It will scan for DNS records, and now is the time to link our domain to our
+    repl.
+  </p>
+
+  <h3>Linking to your Repl</h3>
+
+  <p>
+    Go back to your repl. Click the pencil icon on the web preview and enter
+    your domain.
+  </p>
+
+  <p>
+    Replit will give you a CNAME record. Copy that, because we will need it for
+    the next step.
+  </p>
+
+  <p>Go ahead and press <code>Next</code></p>
+
+  <p>Make sure you keep the repl open or the linking process will stop.</p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124573628_62173b08e3a54fe0def88b320252ca0a.png"
+    alt="Replit Linking Page"
+  />
+
+  <h3>Adding CNAME Records</h3>
+
+  <p>
+    Add a new record with the type being <code>CNAME</code>, the name being
+    <code>@</code> and the target is what you copied from Replit.
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124626968_a3adaf068d34d1171801824817ce013e.gif"
+    alt="Add CNAME record gif"
+  />
+
+  <h3>Changing Nameservers</h3>
+
+  <p>
+    The penultimate step is here. We need to change our domain's nameservers for
+    use with Cloudflare.
+  </p>
+
+  <p>
+    The nameservers you are given are random, and won't be the same every time.
+    So, don't copy my ones, or ones that you have had in the past.
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124653876_e691b8fdb82ce5f3b662d83b8437c9fe.gif"
+    alt="Update namservers gif"
+  />
+
+  <p>Now, link your domain on Replit.</p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124668984_bfc79b5c149dc0ebeb02ed45a52482de.png"
+    alt="Replit Confirm Link"
+  />
+
+  <h3>Changing Security</h3>
+
+  <p>
+    The final thing to do, is to change some Cloudflare security settings. You
+    won't be able to access your website if you don't do this.
+  </p>
+
+  <p>
+    Go through the Quick Start Guide turning everything <code>On</code>.
+    <em
+      >This isn't necessary, but it provides a better experience to the visitors
+      of your website.</em
+    >
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124712450_40cf7dcfff52162c0bbf27178a2ed8d5.gif"
+    alt="Cloudflare Quickstart gif"
+  />
+
+  <p>Now, you need to go to SSL and select Full(Strict)</p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124727557_82b64ea5b2a88090176dd158fdac50fd.gif"
+    alt="Cloudflare SSL gif"
+  />
+
+  <h2>Finished!</h2>
+
+  <p>
+    We're all finished setting up our domain now. Head over to your URL, and
+    give it a go!
+  </p>
+
+  <p>
+    I have been using this repl:
+    <a href="https://replit.com/@DillonB07/Custom-Domain-Demo" target="_blank"
+      >@DillonB07/Custom-Domain-Demo</a
+    >
+    and this domain:
+    <a href="https://customdomaindemo.ml" target="_blank"
+      >https://customdomaindemo.ml</a
+    >
+  </p>
+
+  <img
+    class="img-center img-fifty"
+    src="https://storage.googleapis.com/replit/images/1629124761811_9f3624f8b2e1894e65758064f6d54524.png"
+    alt="My site!"
+  />
+
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144185"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144185&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}

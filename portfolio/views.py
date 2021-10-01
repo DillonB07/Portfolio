@@ -16,3 +16,11 @@ def about():
 @views.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@views.route('/projects')
+def projects():
+    return render_template('projects.html')
+
+@views.route('/tutorials')
+def tutorials():
+    return render_template('tutorials.html')

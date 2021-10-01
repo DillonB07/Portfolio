@@ -1,0 +1,344 @@
+{% extends 'base.html' %} {% block title %}Google Auth for your Flask Website{%
+endblock %} {% block content %}
+<h1>Google Auth for Flask Site</h1>
+<div class="card">
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144745"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144745&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+  <h2>Introduction</h2>
+
+  <p>
+    In this tutorial, I'm going to show you how you can authenticate users with
+    Google on your Flask website. I will not be going over how to create a Flask
+    application, how they work, or Python syntax.
+  </p>
+
+  <h2>Prerequisites</h2>
+
+  <p>You should know the following before following this tutorial:</p>
+
+  <ul>
+    <li>Basic Flask knowledge</li>
+    <li>Intermediate Python knowledge (OOP)</li>
+    <li>A computer</li>
+  </ul>
+
+  <p>
+    It would benefit you if you have used Google's Developer Console before, but
+    you should be fine if you haven't.
+  </p>
+
+  <h2>Tutorial</h2>
+
+  <h3>Setting up a Django Application</h3>
+
+  <p>Let's get started by creating our Google credentials.</p>
+
+  <h3>Google Developer Console Setup</h3>
+
+  <p>
+    First, sign in to
+    <a href="https://console.cloud.google.com/apis/credentials" target="_blank"
+      >Google's Developer Console</a
+    >
+  </p>
+
+  <p>
+    If you haven't used the Developer Console before, Google will ask you a few
+    questions. Complete those, then continue with the tutorial.
+  </p>
+
+  <h4>Configure OAuth2 Consent Screen</h4>
+
+  <p>
+    Create a project and configure your Google OAuth2 Consent Screen. Make sure
+    that you select External user type unless the project is only for inside
+    your Google organisation.
+  </p>
+
+  <p>
+    Fill out the required fields. For the Authorised Domain, put
+    <code>username.repl.co</code>
+  </p>
+
+  <img
+    class="img-fifty img-center"
+    src="https://storage.googleapis.com/replit/images/1630168510545_7b7cc409e95e4a1ba63a1178383911ac.gif"
+    alt="OAuth2 Consent Screen gif"
+  />
+
+  <h4>OAuth2 Credentials</h4>
+
+  <p>
+    Now, we need to get our credentials. Go back to the Credentials tab, and
+    press <code>Create Credentials</code>C. Select
+    <code>Oauth2 Client ID</code>.
+  </p>
+
+  <p>
+    Select a Web Application, name your client and add a redirect URI. The URI
+    will be your repl's url with <code>/callback</code> on the end. Example:
+    <a
+      href="https://Flask-Google-Auth-Demo.dillonb07.repl.co/callback"
+      target="_blank"
+      >https://Flask-Google-Auth-Demo.dillonb07.repl.co/callback</a
+    >
+    Download the credentials you created. We will need the json file inside our
+    repl.
+  </p>
+
+  <img
+    class="img-fifty img-center"
+    src="https://storage.googleapis.com/replit/images/1630168537462_9cad8780072eb1fc7010c5f4536339f3.gif"
+    alt="Create Credentials gif"
+  />
+
+  <p>
+    We've now finished with the Google Developer Console. Let's start making our
+    Flask Application.
+  </p>
+
+  <h3>Creating our Flask App</h3>
+
+  <p>
+    Create a new Python repl with these imports: -
+    <a href="https://repl.new/python" target="_blank">repl.new/python</a>
+  </p>
+
+  <pre><code class='python'>
+    import os
+    import pathlib
+    
+    import requests
+    from flask import Flask, session, abort, redirect, request, url_for
+    from google.oauth2 import id_token
+    from google_auth_oauthlib.flow import Flow
+    from pip._vendor import cachecontrol
+    import google.auth.transport.requests
+  </code></pre>
+
+  <p>
+    These are the packages needed for the webserver and Google Authentication
+  </p>
+
+  <p>Next, do the basic Flask application setup.</p>
+
+  <pre><code class='python'>
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = os.environ('SECRET_KEY') # Add this in the Secrets panel with a random string of letters, numbers and symbols.
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' # This line is used to allow OAuthlib to work on http websites. You'll get an error without this if you try and login.
+
+    # Our code will go here
+
+    if __name__ == '__main__':
+        app.run(port=3000, host='0.0.0.0', debug=True)
+  </code></pre>
+
+  <p>
+    Upload the file that you downloaded from Google into Replit. It will be
+    called something like
+    <code
+      >client_secret_29774424209-u35ovepadeq7iuov24vs30ed24ja68fq.apps.googleusercontent.com.json</code
+    >.
+  </p>
+
+  <p>
+    Rename it to something more readable like <code>client_secret.json</code>.
+  </p>
+
+  <img
+    class="img-fifty img-center"
+    src="https://storage.googleapis.com/replit/images/1630168570376_5c94e2e5890493742da7d8348caf467b.gif"
+    alt="Uploading secrets gif"
+  />
+
+  <p>Go into the file and get your Client ID and set it inside a variable.</p>
+
+  <img
+    class="img-fifty img-center"
+    src="https://storage.googleapis.com/replit/images/1630168578158_a2ade27a0e21ecff46cba535c96d807c.gif"
+    alt="Client ID gif"
+  />
+
+  <p>
+    Now, create a variable called <code>client_secrets_file</code> that creates
+    a path to your file.
+  </p>
+
+  <pre>
+    <code class='python'>
+      client_secrets_file = os.path.join(pathlib.Path(__file__).parent, 'client_secret.json')
+    </code>
+  </pre>
+
+  <p>Now, let's create a flow.</p>
+
+  <pre><code class='python'>
+    flow = Flow.from_client_secrets_file(
+       client_secrets_file=client_secrets_file,
+       scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+        redirect_uri="https://Flask-Google-Auth-Demo.dillonb07.repl.co/callback" # Replace this with your URL
+    )
+  </code></pre>
+
+  <p>
+    This uses Google's oauthlib library to create a flow that sends the
+    necessary data to Google servers.
+  </p>
+
+  <p>
+    Now, we're going to create a custom decorator for our non-existent
+    endpoints.
+  </p>
+
+  <pre>
+    <code class='python'>
+def google_login_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return redirect(url_for('login'))
+        else:
+            return function()
+
+    return wrapper
+    </code>
+  </pre>
+
+  <p>
+    This code will create a decorator that we can use to make sure that the user
+    is authenticated with Google before accessing the endpoint.
+  </p>
+
+  <p>Now, let's work on our endpoints. We're going to have five endpoints.</p>
+
+  <ol>
+    <li><code>/</code> - Homepage with login with Google button</li>
+    <li><code>/login</code> - Redirects the user to Google's OAuth2 Screen</li>
+    <li><code>/callback</code> - Sends and receives data to and from Google</li>
+    <li><code>/logout</code> - Logout of session and redirect to homepage</li>
+    <li>
+      <code>/logged_in</code> - Page that you must be logged in with Google to
+      access
+    </li>
+  </ol>
+
+  <p>Let's start with the easiest endpoint. The homepage.</p>
+
+  <pre>
+    <code class='python'>
+@app.route('/')
+def index():
+    return "You are logged out <a href='/login'><button>Login</button></a>"
+    </code>
+  </pre>
+
+  <p>This is just a basic endpoint that displays a login button.</p>
+
+  <pre>
+    <code class='python'>
+@app.route('/login')
+def login():
+    authorization_url, state = flow.authorization_url()
+    session['state'] = state
+    return redirect(authorization_url)
+    </code>
+  </pre>
+
+  <p>
+    This endpoint sends the user to the Google OAuth2 Consent Screen using the
+    flow that we created earlier.
+  </p>
+
+  <pre>
+    <code class='python'>
+@app.route('/callback')
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session['state'] == request.args['state']:
+        abort(500)
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+
+    session['google_id'] = id_info.get('sub')
+    session['name'] = id_info.get('n
+    </code>
+  </pre>
+
+  <p>
+    This endpoint is the most complicated. Here, we fetch Google's response and
+    send the data to a Flask session.
+  </p>
+
+  <pre>
+    <code class='python'>
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+    </code>
+  </pre>
+
+  <p>
+    This endpoint clears the user's session data and redirects them to the
+    homepage.
+  </p>
+
+  <pre>
+    <code class='python'>
+@app.route('/logged_in')
+@google_login_required
+def logged_in():
+    return "You are logged in <a href='/logout'><button>Logout</button></a>"
+    </code>
+  </pre>
+
+  <p>
+    Here, we use the decorator we created to make sure that the user is logged
+    in with Google to access the page.
+  </p>
+
+  <p>
+    We now have a fully functioning website! Run the program and try to log in
+    with Google. You should be able to see the Logged in message after signing
+    in with Google.
+  </p>
+
+  <p>
+    Here is the website I made:
+    <a href="https://Flask-Google-Auth-Demo.dillonb07.repl.co" target="_blank"
+      >https://Flask-Google-Auth-Demo.dillonb07.repl.co</a
+    >
+  </p>
+
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/144745"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=144745&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}

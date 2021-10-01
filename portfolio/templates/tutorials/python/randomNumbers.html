@@ -1,0 +1,206 @@
+{% extends 'base.html' %} {% block title %}A Guide to Random Numbers{% endblock
+%} {% block content %}
+<h1>A Guide to Random Numbers</h1>
+<div class="card">
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/145970"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=145970&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+  <h2>Introduction</h2>
+
+  <p>
+    Have you ever wondered how random numbers work? In this tutorial, I'll be
+    explaining how the Python random module works. This tutorial/explanation is
+    for Python, but it will be similar or the same for other languages.
+  </p>
+
+  <h2>Are random numbers random?</h2>
+
+  <p>Short answer: No.</p>
+
+  <p>
+    Long answer: There is no such thing as true randomness on a computer. An
+    example of true randomness is the rolling of a dice. Random numbers on a
+    computer are not random. They are <code>pseudo-random</code> numbers.
+  </p>
+
+  <h2>What are pseudo-random numbers?</h2>
+
+  <p>
+    <em
+      >"Pseudorandomness measures the extent to which a sequence of numbers,
+      though produced by a completely deterministic and repeatable process,
+      appear to be patternless." - Wikipedia</em
+    >
+  </p>
+
+  <p>
+    This means that although random numbers look completely random, they're not,
+    and they can be repeated.
+  </p>
+
+  <h2>Examples</h2>
+
+  <p>I've created a python file with the following code:</p>
+
+  <pre>
+      <code class='python'>
+import random
+
+for i in range(10):
+    print(random.randint(1, 10), end=" ")
+      </code>
+  </pre>
+
+  <p>This will print 10 "random" numbers.</p>
+
+  <p>Running the program, here is my output: 3 2 1 4 5 4 3 9 2 6</p>
+
+  <p>If I run it again, I get different numbers: 1 6 2 7 2 6 5 3 7 4</p>
+
+  <p>
+    Seems random right? Well what if I told you that we could make it produce
+    the same numbers every time?
+  </p>
+
+  <p>Add this line of code before the for loop:</p>
+
+  <pre>
+      <code class='python'>
+random.seed(1)
+      </code>
+  </pre>
+
+  <p>Running the program I get this output: 3 2 5 2 8 8 8 7 4 2</p>
+
+  <p>If I run it again, I get the same output: 3 2 5 2 8 8 8 7 4 2</p>
+
+  <p>
+    This is because, by default, <code>random.seed()</code> uses the seconds
+    past the Epoch. The Epoch is the 1st January 1970.
+  </p>
+
+  <p>Let's import <code>time</code> and set the seed to the current time.</p>
+
+  <pre>
+      <code class='python'>
+import time
+
+time = time.time()
+print(time)
+random.seed(time)
+...
+      </code>
+  </pre>
+
+  <p>Now running the program here is my output:</p>
+
+  <pre>
+    <code class='python'>
+1632677787.1545157
+7 6 6 3 1 7 3 5 7 8
+    </code>
+</pre>
+
+  <p>
+    The first line is the current time. This is in seconds past the Epoch. Then
+    we have our pseudo-random numbers. If we set our
+    <code>random.seed()</code> to the first number, we'll always get the same
+    random numbers generated.
+  </p>
+
+  <p>
+    There is a very popular game called <code>Minecraft</code> that uses
+    pseudo-random numbers. In the generation of a world, you can enter a seed.
+    This seed then generates the world. But, if you use the same seed multiple
+    times, the world is always the same. This is the same principle. The worlds
+    are generated based on the seed, just like our numbers are here!
+  </p>
+
+  <p>Finished code:</p>
+
+  <pre>
+      <code class='python'>
+import random
+import time
+
+time = time.time()
+print(time)
+random.seed(time)
+
+for i in range(10):
+    print(random.randrange(1, 10), end=" ")
+      </code>
+  </pre>
+
+  <p>
+    To learn more about Python's random module, check out the documentation:
+    <a href="https://docs.python.org/3/library/random.html" target="_blank"
+      >https://docs.python.org/3/library/random.html</a
+    >
+  </p>
+
+  <p>Modified version of code:</p>
+
+  <pre>
+      <code class='python'>
+import random
+import time
+
+
+with open('numbers.txt', 'a') as b:
+
+    b.write('\nNew Session\n')
+    print('\nNew Session\n')
+    
+    for a in range(100):
+        current_time = time.time()
+        print(f'Time: {current_time}')
+        b.write(f'Time: {current_time}\n')
+        random.seed(current_time)
+
+        print('Random Numbers: ', end="")
+        for c in range(10):
+            print(random.randrange(1, 10), end=" ")
+            b.write(str(random.randrange(1, 10)))
+            b.write(' ')
+        print('\n')
+        b.write('\n')
+      </code>
+  </pre>
+
+  <p>
+    This will run the generator 100 times and write the results into a file
+    called <code>numbers.txt</code>.
+  </p>
+
+  <p>
+    Repl:
+    <a
+      href="https://replit.com/@DillonB07/pseudo-randomNumbersDemo"
+      target="_blank"
+      >@DillonB07/pseudo-randomNumbersDemo</a
+    >
+  </p>
+
+  <a
+    class="center"
+    href="https://replit.com/talk/share/repl-post/145970"
+    target="_blank"
+  >
+    <img
+      src="https://replit-badge.vercel.app/api?id=145970&style=gradient&featuredOn=VIEW%20ON&replTalk=Repl%20Learn"
+      alt="Repl Talk Badge"
+    />
+  </a>
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}
