@@ -7,12 +7,17 @@ tutorials = Blueprint('tutorials', __name__)
 def index():
     return redirect(url_for('views.tutorials'))
 
-# Plain Python tutorials
+# Python tutorials
 
 
 @tutorials.route('/python/randomNumbers')
 def randomNumbers():
     return render_template('tutorials/python/randomNumbers.html')
+
+
+@tutorials.route('/python/passwordHashing')
+def passwordHashing():
+    return render_template('tutorials/python/passwordHashing.html')
 
 # Replit tutorials
 
