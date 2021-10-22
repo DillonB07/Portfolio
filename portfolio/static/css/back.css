@@ -1,4 +1,6 @@
 body {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -17,14 +19,16 @@ body {
   }
 }
 
-#content {
+/* #content {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
-}
+} */
 
 #box {
   border-radius: 6px;

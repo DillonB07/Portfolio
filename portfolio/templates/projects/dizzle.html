@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block title %}Dizzle{% endblock %} {% block content
+%}
+<h1>Dizzle</h1>
+<div class="card">
+  <h3>Dizzle</h3>
+  <p>Dizzle is a website that you can use to test your general knowledge.</p>
+  <img
+    class="img-center"
+    src="{{ url_for('static', filename='images/dizzle.png') }}"
+    width="20%"
+    height="20%"
+    alt="Dizzle"
+  />
+
+  <p>
+    Dizzle lets you grab a general knowledge question to test your knowledge.
+    All questions come from <a href="/project/qapi">QAPI</a> which is an API
+    that I made for this project.
+  </p>
+
+  <h4>Features</h4>
+  <ul>
+    <li>{{total_questions}} questions with more being added regularly.</li>
+    <li>Different types of questions</li>
+    <li>Answer checking</li>
+    <li>Custom suggestions form</li>
+    <li>Backwards-Compatability for browsers without newer CSS support.</li>
+  </ul>
+  <h4>Where is it?</h4>
+  <ul class="links">
+    <li>
+      <a href="https://github.com/DillonB07/Dizzle" target="_blank"> GitHub </a>
+    </li>
+    <li>
+      <a href="https://dizzle.ml" target="_blank"> Website </a>
+    </li>
+  </ul>
+</div>
+<div class="container">
+  <a class="button" href="/projects">Back</a>
+</div>
+{% endblock %}
