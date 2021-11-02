@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block title %}Contact{% endblock %}{% block head %}
+<script src="https://www.google.com/recaptcha/api.js">
+
+</script>{% endblock %}{% block content %} {% if user_id %}
+<h1>Hello, {{ user_name }}!</h1>
+<div class='card center'>
+	<p>Please fill in the form below and click send to contact me!</p>
+	<form method='POST' action='/contact-sent'>
+		<label for='name'>Username: 
+            <input class='center' type='text' name='s-name' value='{{user_name}}' disabled />
+        </label>
+        <label for='id'>User ID: 
+            <input class='center' type='text' name='s-id' value='{{user_id}}' disabled />
+        </label>
+        <input class='center' type='text' name='name' value='{{user_name}}' hidden='True' />
+        <input class='center' type='text' name='id' value='{{user_id}}' hidden='True' />
+        <label for='email'>Email: 
+            <input class='center' type='email' name='email' placeholder='{{user_name}}@replit.com' required/>
+        </label>
+        <label for='subject'>Subject: 
+            <select class='center' name='subject' required>
+                <option disabled>Select One</option>
+                <option value="Question Suggestion">Question Suggestion</option>
+                <option value="Riddle Suggestion">Riddle Suggestion</option>
+                <option value="Project Suggestion">Project Suggestion</option> 
+                <option value="Project Bugs">Project Bugs</option> 
+                <option value="Other">Other</option>
+            </select>
+        </label>
+        <label for='message'>Message:
+            <textarea class='center' name='message' required></textarea>
+        </label>
+        <label for='robot'>
+            <div name='robot' class="g-recaptcha center" data-sitekey="6LfEwQ0dAAAAAHaumM5WKLwHWAd6jubTI012xdTw"></div>
+        </label>
+
+        <input class="rainbow" id="submit" type="submit" value="Submit" />
+    </form>
+</div>
+{% else %}
+<h1>Sign In</h1>
+<div class='card'>
+    <p>Before sending a message, please authenticate via Replit.<br/>Authenticating via Replit is required to avoid spam.</p>
+    
+	<script authed="location.reload()" src="{{url_for('static', filename='js/repl-auth.js')}}"></script>
+    
+	</script>
+</div>
+{% endif %} {% endblock %}
