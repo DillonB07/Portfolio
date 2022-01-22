@@ -1,0 +1,202 @@
+{% extends 'base.html' %} {% block title %}Get a Custom Domain for your Replit
+Repl{% endblock %}{% block description %}"Learn how to get a custom domain for
+your Replit website here!"{% endblock %}{% block content %}
+<h1>Getting a Custom Email for your Custom Domain!</h1>
+<div class="card">
+  <h2>Introduction</h2>
+
+  <p>
+    Do you dislike your generic `@gmail.com` email? Or, do you want a more
+    memorable one? Well, whatever the reason, this tutorial is for you!
+    <br />
+    Let's get started!
+  </p>
+
+  <h2>What service should I use?</h2>
+
+  <p>
+    I'm going to assume throughout this tutorial that you have your domain and
+    you want multiple email accounts registered for free.
+    <em
+      >Multiple accounts are useful if you want mailing lists or automatic
+      replies from a contact form.</em
+    >
+  </p>
+
+  <p>
+    There are lots of email services that you can use, but my tutorials are
+    always going to be completely free which limits your options quite a lot.
+  </p>
+
+  <p>
+    The main options from when I did my research were Google and Yandex.
+    However, although Google is generally more popular for the purpose of
+    multiple users/accounts and price we're going to use Yandex. Also, if you
+    want automatic emailing via SMPT on Replit, Google's
+    <em>lowest</em> security is too high! You <strong>can not</strong> use
+    Google SMTP on Replit.
+  </p>
+
+  <h2>Setting up a Yandex account</h2>
+
+  <p>
+    Yandex is a Russian company. It offers many services that are included in a
+    Google account. Storage, mail, search, chat and more.
+  </p>
+
+  <p>
+    To get started, create a Yandex passport(account) at
+    <a href="https://mail.yandex.com" target="_blank"
+      >https://mail.yandex.com</a
+    >
+  </p>
+
+  <p>Now that we have an account, it's time to create an organisation.</p>
+
+  <p>
+    To do this, you need to go to
+    <a href="https://admin.yandex.ru" target="_blank"
+      >https://admin.yandex.ru</a
+    >
+    and sign in.
+  </p>
+
+  <p>
+    You may be greeted with a message that says their isn't an organisation
+    connected with your account. Just press `Create new organisation`.
+  </p>
+
+  <img
+    src="https://Tutorials.dillonb07.repl.co/static/Replit/customEmail/createOrg.png"
+    alt="Create Org"
+  />
+
+  <p>Accept the Terms of Use, and we can start setting up the custom domain.</p>
+
+  <p>Select <code>Set up email</code> on the sidebar and enter your domain.</p>
+
+  <h2>Confirming Domain Ownership</h2>
+
+  <p>
+    In order to use the custom domain for your email address, you need to verify
+    that the domain is yours.
+  </p>
+
+  <p>
+    There are three ways to verify the domain. You can add a TXT record to your
+    DNS, add a HTML meta tag to your website, or upload a HTML file to your
+    server.
+  </p>
+
+  <p>You can use any of these, but it is best to use a DNS record.</p>
+
+  <p>
+    Open your Cloudflare account and add a new TXT record with the content that
+    Yandex gave you. The <code>Name</code> or <code>Target</code> should be
+    <code>@</code>.
+  </p>
+
+  <img
+    alt="Domain verification DNS Record"
+    src="https://Tutorials.dillonb07.repl.co/static/Replit/customEmail/domainVerification.png"
+  />
+
+  <p>
+    Click <code>Verify Domain</code>. It might take a while to update, so if it
+    doesn't work, just try pressing the button again.
+  </p>
+
+  <h2>Setting MX Records</h2>
+
+  <p>
+    Now, you need to set up an MX record that will point to Yandex's mail
+    servers. An MX record is a record that forwards emails with
+    <code>@customdomain.tld</code> to the account hosted on Yandex.
+  </p>
+
+  <p>
+    The <code>Name/target</code> should be <code>@</code> with the server being
+    <code>mx.yandex.net.</code> Make the priority <code>10</code>.
+  </p>
+
+  <h5>
+    <strong
+      ><em
+        >WARNING: If your MX record isn't verifying, make sure that the mail
+        server is pointing to <code>mail.yandex.net.</code> not
+        <code>mail.yandex.net</code></em
+      ></strong
+    >
+  </h5>
+
+  <img alt='MX DNS Record'
+  src'https://Tutorials.dillonb07.repl.co/static/Replit/customEmail/MXRecord.gif'
+  />
+
+  <h2>Configuring DKIM + SPF Records</h2>
+
+  <p>
+    DKIM` Signatures and SPF Records help your messages not being seen as spam.
+    SPF records aren't used very much, but it's good to put them as a TXT record
+    instead.
+  </p>
+
+  <img
+    alt="DKIM + SPF TXT Records"
+    src="https://Tutorials.dillonb07.repl.co/static/Replit/customEmail/DKIM_SPF.gif"
+  />
+
+  <p>
+    DKIM and SPF records don't show that they've been setup correctly, so don't
+    waste time wondering why it isn't telling you that it has been.
+  </p>
+
+  <h2>Configuring DMARC Record</h2>
+
+  <p>
+    This is most definitely *not* necessary, but it is useful. If a message
+    fails authentication, you want the recipient to know. Add this as a TXT
+    record with the name/target as <code>@</code>.
+  </p>
+
+  <p>Content: <code>v=DMARC1; p=reject; rua=mailto:email@domain.tld</code></p>
+
+  <h5>
+    <strong
+      ><em
+        >NOTE: Make sure to replace <code>email@domain.tld</code> with your
+        personal email!</em
+      ></strong
+    >
+  </h5>
+
+  <h2>Setting up Email Addresses</h2>
+
+  <p>Now that the domain is ready, we can set up email addresses.</p>
+
+  <p>
+    This is really simple! Just go over to the <code>User</code> tab and create
+    as many users as you'd like.
+  </p>
+
+  <p>
+    Also, you might have noticed that the organisation is just called
+    <code>New Organisation</code>. This is a little dull. If you go over to
+    <code>Company Profile</code> you can change it to whatever you want.
+  </p>
+
+  <h2>The End....</h2>
+
+  If you have any feedback or suggestions for more tutorials, then put them in
+  the comments below. As always, you can view the raw Markdown on my Tutorials
+  repl which is here:
+  <a
+    href="https://replit.com/@DillonB07/Tutorials/static/replit/customEmail#README.md"
+    target="_blank"
+    >View Tutorials repl</a
+  >
+</div>
+<div class="container">
+  <a class="button" href="/tutorials">Back</a>
+</div>
+{% endblock %}

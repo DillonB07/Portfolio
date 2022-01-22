@@ -53,7 +53,5 @@ def contact_logic():
             return render_template('contact/success.html')
         else:
             return render_template('contact/failure.html')
-
-        print(name)
     else:
         return redirect(url_for('views.contact'))

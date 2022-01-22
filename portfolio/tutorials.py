@@ -19,17 +19,22 @@ def randomNumbers():
 def passwordHashing():
     return render_template('tutorials/python/passwordHashing.html')
 
-# Replit tutorials
+# Domain tutorials
 
 
-@tutorials.route('/replit/customDomain')
+@tutorials.route('/domain/customDomain')
 def customDomain():
-    return render_template('tutorials/replit/customDomain.html')
+    return render_template('tutorials/domains/customDomain.html')
 
 
-@tutorials.route('/replit/is-a-dev')
+@tutorials.route('/domain/customEmail')
+def customEmail():
+    return render_template('tutorials/domains/customEmail.html')
+
+
+@tutorials.route('/domain/is-a-dev')
 def is_a_dev():
-    return render_template('tutorials/replit/is-a-dev.html')
+    return render_template('tutorials/domains/is-a-dev.html')
 
 # Flask tutorials
 
