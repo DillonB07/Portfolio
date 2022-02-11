@@ -7,13 +7,11 @@ app = current_app
 def index():
     try:
         """Generate sitemap.xml. Makes a list of urls."""
-        pages = []
-        for rule in app.url_map.iter_rules():
-            if "GET" in rule.methods and len(rule.arguments) == 0:
-                pages.append(
-                    "https://dillonb07.is-a.dev" +
-                    str(rule.rule)
-                )
+        pages = [
+            "https://dillonb07.is-a.dev" + str(rule.rule)
+            for rule in app.url_map.iter_rules()
+            if "GET" in rule.methods and len(rule.arguments) == 0
+        ]
 
         sitemap_xml = render_template('public/sitemap.xml', pages=pages)
         response = make_response(sitemap_xml)
