@@ -34,24 +34,21 @@ def contact():
 
 @views.route('/contact-sent', methods=['GET', 'POST'])
 def contact_logic():
-    if request.method == 'POST':
-        name = request.form['name']
-        id = request.form['id']
-        email = request.form['email']
-        subject = request.form['subject']
-        message = request.form['message']
-        captcha_response = request.form['g-recaptcha-response']
-
-        if not is_human(captcha_response):
-            print('Bot attempt!')
-            return redirect(url_for('views.contact'))
-
-        e = Email(name, id, email, subject, message)
-        sent = e.sendEmail()
-
-        if sent:
-            return render_template('contact/success.html')
-        else:
-            return render_template('contact/failure.html')
-    else:
+    if request.method != 'POST':
         return redirect(url_for('views.contact'))
+    name = request.form['name']
+    id = request.form['id']
+    email = request.form['email']
+    subject = request.form['subject']
+    message = request.form['message']
+    captcha_response = request.form['g-recaptcha-response']
+
+    if not is_human(captcha_response):
+        print('Bot attempt!')
+        return redirect(url_for('views.contact'))
+
+    e = Email(name, id, email, subject, message)
+    if sent := e.sendEmail():
+        return render_template('contact/success.html')
+    else:
+        return render_template('contact/failure.html')
